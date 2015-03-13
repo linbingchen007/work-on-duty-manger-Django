@@ -1,6 +1,6 @@
 #-*- coding:utf-8 -*-
-from django.conf.urls import include,url
-from vip import views
+from django.conf.urls import patterns,include,url
+from mysite import views
 
 urlpatterns=patterns('',
 	url('^$',views.index,name='index'),
