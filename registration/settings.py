@@ -30,7 +30,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -62,7 +61,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'liyapingres',
         'USER': 'root',
-        'PASSWORD':'123456',
+        'PASSWORD':'6191162',
         'HOST': 'localhost',
         'PORT' : '3306',
     }
