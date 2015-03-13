@@ -1,0 +1,13 @@
+{% load static %}
+{% include 'mysite/header.html' %}
+
+<div id="indexdiv">
+<div id="inner">
+<img src="{% static 'mysite/indexpic.jpg' %}" width="250" height="212">
+<br>
+<a class="btn btn-primary btn-lg" href="{% url "dj:extrawork" %}" role="button">加班签到</a>
+&nbsp;&nbsp;
+
+<a class="btn btn-primary btn-lg" href="{% url "dj:duty" %}" role="button">值班签到</a>
+</div>
+</div>
