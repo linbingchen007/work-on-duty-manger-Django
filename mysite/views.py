@@ -3,7 +3,7 @@ from django.template import RequestContext, loader
 from django.shortcuts import render, render_to_response
 from django.forms import ModelForm
 from django.core.context_processors import csrf
-from mysite.models import Registers,Extrawork
+from mysite.models import Dutyreg,Extraworkreg
 # Create your views here.
 import time
 

@@ -3,7 +3,7 @@ import datetime
 # Create your models here.
 
 
-class Registers(models.Model):
+class Dutyreg(models.Model):
     id = models.AutoField(primary_key=True)
     date = models.DateField(default=datetime.date.today())
     amname = models.CharField(max_length=75)
@@ -15,7 +15,7 @@ class Registers(models.Model):
     remark = models.CharField(max_length=255)
 
 
-class Extrawork(models.Model):
+class Extraworkreg(models.Model):
     id = models.AutoField(primary_key=True)
     date = models.DateField(default=datetime.date.today())
     amname = models.CharField(max_length=75)
