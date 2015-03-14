@@ -1,0 +1,7 @@
+.DS_Store
+*.pyc
+mysite/.DS_Store
+mysite/*.pyc
+mysite/migrations/*.pyc
+registration/*.pyc
+registration/.DS_Store

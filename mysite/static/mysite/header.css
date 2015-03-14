@@ -4,13 +4,8 @@ td, th {
     width:111px;
     text-align: center;
 }
-#textline {
-    background :rgb(241, 241, 241);
-    width: 100px;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-
+body {
+    height:500px;
 }
 #indexdiv{
     width:500px;
@@ -23,18 +18,4 @@ td, th {
     position: relative;
     top: 50%;
     transform: translateY(-50%);
-}
-body {
-    height:500px;
-}
-#extraworkdj,#dutydj{
-   position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-table#curtab {
-	width:980px;
-    border-collapse: collapse;
-    table-layout:fixed;
 }

@@ -2,19 +2,13 @@
 {% include 'mysite/header.html' %}
 <meta http-equiv="refresh" content="3;url={% url retlink %}" />
 
-
-    <div class="container">
-      <div class="page-header">
-        <h1>{{msgtext}}</h1>
-      </div>
-      <div class="page-body">
-        <p1>3秒之後返回        	
-        		<a href="{% url retlink %}">
-                主頁 
-                </a>
-        	
-        	
-        </p1>
-      </div>
-      
-    </div>
+<div class="container">
+  <div class="page-header">
+    <h1>{{msgtext}}</h1>
+  </div>
+  <div class="page-body">
+    <p1>3秒之後返回        	
+    		<a href="{% url retlink %}"> 前一頁 </a>
+    </p1>
+  </div> 
+</div>

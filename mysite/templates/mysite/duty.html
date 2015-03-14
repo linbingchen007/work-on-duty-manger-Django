@@ -1,25 +1,14 @@
-
-
+<html lang="zh-cn">
 {% load static  %}
 {% include 'mysite/header.html' %}
 <body>
-
-
-
-<form action="{% url "dj:handleduty" %}" id="dutydj" method="POST" role="form">
- {% csrf_token %}  
-<div id="djtable" align="center" style="width:980px;margin-left:auto;margin-right:auto;">
-<div id ="navtop" align="left">
-<a class="btn btn-lg btn-default" href="{% url "index" %}" role="button">主页</a>
-&nbsp;&nbsp;
-<a class="btn btn-lg btn-default" href="{% url "dj:extrawork" %}" role="button">加班签到</a>
-&nbsp;&nbsp;
-
-<a class="btn btn-lg btn-danger" href="{% url "dj:duty" %}" role="button">值班签到</a>
+<div class="container">
+<div class="page-header text-center">
+<h1>今日值班登记</h1>
 </div>
-<h2>今日值班登记 </h2>
-<table id="curtab">
-	<tboday>
+<form action="{% url "dj:handleduty" %}" method="POST" role="form">
+ {% csrf_token %} 
+<table class="table table-striped">
 	<tr>
 		<td>日期 </td>
 		<td>上午姓名 </td>
@@ -32,24 +21,31 @@
 	</tr>
 	<tr>
 		<td>{{duty.date|date:"Y-m-d"}} </td>
-		<td><input  type="text" class="form-control" name="amname" id="textline" value="{{duty.amname}}"  autofocus> </td>
-		<td><input type="text" class="form-control" name="amamount" id="textline" value="{{duty.amamount}}"  autofocus> </td>
-		<td><input type="text" class="form-control" name="pmname" id="textline" value="{{duty.pmname}}"   autofocus></td>
-		<td><input type="text" class="form-control" name="pmamount" id="textline" value="{{duty.pmamount}}"  autofocus> </td>
-		<td><input type="text" class="form-control" name="evename" id="textline" value="{{duty.evename}}"   autofocus></td>
-		<td><input type="text" class="form-control" name="eveamount" id="textline" value="{{duty.eveamount}}"  autofocus> </td>
+		<td><input  type="text" class="form-control" name="amname" value="{{duty.amname}}"  autofocus> </td>
+		<td><input type="text" class="form-control" name="amamount" value="{{duty.amamount}}"  autofocus> </td>
+		<td><input type="text" class="form-control" name="pmname" value="{{duty.pmname}}"   autofocus></td>
+		<td><input type="text" class="form-control" name="pmamount" value="{{duty.pmamount}}"  autofocus> </td>
+		<td><input type="text" class="form-control" name="evename" value="{{duty.evename}}"   autofocus></td>
+		<td><input type="text" class="form-control" name="eveamount" value="{{duty.eveamount}}"  autofocus> </td>
 		<td>{{duty.remark}}
 		{% if duty.remark != ' ' %}
 		<br >
 		{% endif %}
-		<input type="text" class="form-control" name="remark" id="textline"   autofocus style="width:180px"> </td>
+		<input type="text" class="form-control" name="remark" autofocus style="width:170px"> 
 		</td>
 	</tr>
-	</tboday>
-
 </table>
 <button type="submit" class="btn btn-warning pull-right">提交</button>
-</div>
 </form>
+<br>
+<br>
+<br>
 
+<ol class="breadcrumb">
+  <li><a href="{% url "index" %}">主页</a></li>
+  <li><a href="{% url "dj:extrawork" %}">加班签到</a></li>
+  <li class="active">值班签到</li>
+</ol>
+</div>
 </body>
+</html>
