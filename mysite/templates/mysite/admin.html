@@ -1,6 +1,6 @@
 {% include 'mysite/header.html' %}
 <br>
-<div id="djtable" align="center" style="width:1312px;margin-left:auto;margin-right:auto;">
+<div id="djtable" align="center" style="width:{% if extrawork_list %}1423px;{% else %}1090px;{% endif %}margin-left:auto;margin-right:auto;">
 <div id ="navtop" align="center">
 <h2>值班加班信息管理系统</h2>
 <a class="btn btn-lg btn-default" href="{% url "index" %}" role="button">主页</a>
@@ -9,7 +9,7 @@
 &nbsp;&nbsp;
 <a class="btn btn-lg btn-default" href="{% url "dj:chgpass" %}" role="button">修改密码</a>
 </div>
-<div class="container">
+<div class="container" style="width:{% if extrawork_list %}1423px;{% else %}1090px;{% endif %}">
 <form action="{% url "dj:gettable" %}" class="form-horizontal" method="POST" role="form" id="cxform"> {% csrf_token %} 
 起始日期: <input type="text" name="sdate" {% if lstsdate  %} value="{{lstsdate}}" {% endif %} id="sdate"> &nbsp;&nbsp;&nbsp;&nbsp;
 结束日期: <input type="text" name="tdate" {% if lsttdate  %} value="{{lsttdate}}" {% endif %} id="tdate">&nbsp;&nbsp;&nbsp;&nbsp;

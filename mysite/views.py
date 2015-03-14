@@ -208,14 +208,14 @@ def gettable(request):
         tdate = datetime.date(int(tdate_list[0]),int(tdate_list[1]),int(tdate_list[2]))
         cxtype = request.POST['cxtype']
         if cxtype == 'extrawork':
-            rst_list = Extraworkreg.objects.all().filter(date__gte=sdate,date__lte=tdate)
+            rst_list = Extraworkreg.objects.all().filter(date__gte=sdate,date__lte=tdate).order_by('date')
             c={
                 'extrawork_list':rst_list,
                 'selectfg' : 'extrawork',
                 'lstsdate' : sdate_str,
                 'lsttdate' : tdate_str,
             }
-            with open('mysite/static/mysite/down.csv','wb') as outfile:
+            with open('/var/www/mysite/mysite/static/mysite/down.csv','wb') as outfile:
                 writer = csv.writer(outfile)
                 writer.writerow(["日期","上午名字","加班内容","金额","下午名字","加班内容","金额","晚上名字","加班内容","金额","备注"])
                 for extrawork in rst_list:
@@ -229,12 +229,12 @@ def gettable(request):
                 'lstsdate' : sdate_str,
                 'lsttdate' : tdate_str,
             }
-            with open('mysite/static/mysite/down.csv','wb') as outfile:
+            with open('/var/www/mysite/mysite/static/mysite/down.csv','wb') as outfile:
                 writer = csv.writer(outfile)
                 writer.writerow(["日期","上午名字","金额","下午名字","金额","晚上名字","金额","备注"])
                 for extrawork in rst_list:
                     writer.writerow([str((extrawork.date).isoformat ()),unicode(extrawork.amname).encode('utf8'),str(extrawork.amamount),unicode(extrawork.pmname).encode('utf8'),str(extrawork.pmamount),unicode(extrawork.evename).encode('utf8'),str(extrawork.eveamount),unicode(extrawork.remark).encode('utf8')])
-
+    
             return render_to_response('mysite/admin.html',c,context_instance=RequestContext(request))
         else:
             return response_spcinf(request, "Failed to query!", 'dj:admin')
@@ -246,7 +246,7 @@ def down(request):
     from django.core.servers.basehttp import FileWrapper
     from django.conf import settings
     import mimetypes
-    filename =  "mysite/static/mysite/down.csv"
+    filename =  "/var/www/mysite/mysite/static/mysite/down.csv"
     download_name = "down.csv"
     wrapper = FileWrapper(open(filename))
     content_type = mimetypes.guess_type(filename)[0]
