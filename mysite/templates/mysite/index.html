@@ -2,16 +2,18 @@
 {% include 'mysite/header.html' %}
 
 <div id="indexdiv">
+
 <div id="inner">
 <img src="{% static 'mysite/indexpic.jpg' %}" width="250" height="212">
+
 <br>
+<a href="{% url "dj:login" %}" role="button"> <span class="glyphicon glyphicon-user"></span>  管理员入口</a>
+<hr/>
 <a class="btn btn-primary btn-lg" href="{% url "dj:extrawork" %}" role="button">加班签到</a>
 &nbsp;&nbsp;
 
 <a class="btn btn-primary btn-lg" href="{% url "dj:duty" %}" role="button">值班签到</a>
 <br>
-<br>
-<a class="btn btn-primary btn-lg" href="{% url "dj:login" %}" role="button">管理员入口</a>
 
 </div>
 </div>

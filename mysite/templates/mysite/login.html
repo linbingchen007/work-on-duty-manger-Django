@@ -1,12 +1,12 @@
 {% include 'mysite/header.html' %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static "mysite/signin.css" %}">
 <div class="container">
-<h2>管理入口</h2>
-<br>
-<form action="{% url 'dj:handlelogin' %}" class="form-horizontal" method="post"> {% csrf_token %} 
-密码: <input type="password" name="password">
-
-<input type="submit" class="btn btn-default" value="进入">
-</form>
-
-
+      <form class="form-signin" action="{% url 'dj:handlelogin' %}" method="post">
+      {% csrf_token %}
+        <h2 class="form-signin-heading">请登录：</h2>
+    	<input type="password" class="form-control" name="password" id="inputPasswd" placeholder="请输入密码">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+      </form>
+    </div>
 </div>
