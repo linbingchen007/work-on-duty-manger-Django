@@ -1,2 +1,2 @@
-# Django_Registration
-李亚平 登记系统
+﻿Django
+加班值班管理系统-Django
