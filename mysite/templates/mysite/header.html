@@ -7,9 +7,10 @@
 
 <!-- Optional theme -->
 <link rel="stylesheet" href="{% static "bootstrapdist/css/bootstrap-theme.min.css" %}">
-
+<link rel="stylesheet" href="{% static "jquery/jquery-ui.css" %}">
 <!-- Latest compiled and minified JavaScript -->
-<script src="{% static "jquery/jquery-1.11.2.min.js" %}"></script>
+<script src="{% static "jquery/jquery-1.10.2.js" %}"></script>
+<script src="{% static "jquery/jquery-ui.js" %}"></script>
 <script src="{% static "bootstrapdist/js/bootstrap.min.js" %}"></script>
 <script>
 	jQuery(function($){
@@ -33,8 +34,10 @@
 		yearSuffix: '年'};
 	$.datepicker.setDefaults($.datepicker.regional['zh-CN']);
 });
+
   $(function() {
-    $( "#datepicker" ).datepicker();
+    $( "#sdate" ).datepicker();
+    $( '#tdate').datepicker();
   });
   </script>
 

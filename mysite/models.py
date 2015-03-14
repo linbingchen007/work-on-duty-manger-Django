@@ -29,3 +29,7 @@ class Extraworkreg(models.Model):
     evetext = models.CharField(max_length=255,default=" ")
     eveamount = models.IntegerField(default=0)
     remark = models.CharField(max_length=255,default=" ")
+
+class  Variable(models.Model):
+    varname = models.CharField(max_length=255) 
+    varval = models.CharField(max_length=255)

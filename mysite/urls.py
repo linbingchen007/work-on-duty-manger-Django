@@ -9,5 +9,12 @@ urlpatterns=patterns('',
 	url('^extrawork$',views.extrawork,name='extrawork'),
 	url('^handleduty$',views.handleduty,name='handleduty'),
 	url('^handleextrawork$',views.handleextrawork,name='handleextrawork'),
-	url('^admin',views.admin,name='admin'),
+	url('^admin$',views.admin,name='admin'),
+	url('^init$',views.init,name='init'),
+	url('^login$',views.login,name='login'),
+	url('^handlelogin$',views.handlelogin,name='handlelogin'),
+	url('^gettable$',views.gettable,name='gettable'),
+	url('^generate_data$',views.generate_data,name='generate_data'),
+	url('^down$',views.down,name='down'),
+	url('^chgpass$',views.chgpass,name='chgpass')
 )

@@ -27,12 +27,13 @@ td, th {
 body {
     height:500px;
 }
-body form{
+#extraworkdj,#dutydj{
    position: relative;
     top: 50%;
     transform: translateY(-50%);
 }
-table {
+
+table#curtab {
 	width:980px;
     border-collapse: collapse;
     table-layout:fixed;

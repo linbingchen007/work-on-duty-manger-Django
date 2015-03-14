@@ -1,0 +1,12 @@
+{% include 'mysite/header.html' %}
+<div class="container">
+<h2>管理入口</h2>
+<br>
+<form action="{% url 'dj:handlelogin' %}" class="form-horizontal" method="post"> {% csrf_token %} 
+密码: <input type="text" name="password">
+
+<input type="submit" class="btn btn-default" value="进入">
+</form>
+
+
+</div>

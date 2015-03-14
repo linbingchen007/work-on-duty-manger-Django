@@ -1,0 +1,44 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+
+
+
+<meta charset="utf-8">
+
+
+   
+
+<!-- Optional theme -->
+
+<link rel="stylesheet" href="{% static "jquery/jquery-ui.css" %}">
+<!-- Latest compiled and minified JavaScript -->
+<script src="{% static "jquery/jquery-1.10.2.js" %}"></script>
+<script src="{% static "jquery/jquery-ui.js" %}"></script>
+
+
+<style>
+body {
+	font-family: "Trebuchet MS", "Helvetica", "Arial",  "Verdana", "sans-serif";
+	font-size: 62.5%;
+}
+</style>
+
+
+
+
+	
+	<script>
+	$(function() {
+		$( "#datepicker" ).datepicker();
+	});
+	</script>
+</head>
+<body>
+
+<p>Date: <input type="text" id="datepicker"></p>
+
+
+</body>
+</html>
