@@ -13,7 +13,6 @@
   <li class="active">查询</li>
 </ol>
 
-<div style="width:{% if extrawork_list %}1423px;{% else %}1090px;{% endif %}">
 <form action="{% url "dj:gettable" %}" class="form-horizontal" method="POST" role="form" id="cxform"> {% csrf_token %} 
 起始日期: <input type="text" name="sdate" {% if lstsdate  %} value="{{lstsdate}}" {% endif %} id="sdate"> &nbsp;&nbsp;&nbsp;&nbsp;
 结束日期: <input type="text" name="tdate" {% if lsttdate  %} value="{{lsttdate}}" {% endif %} id="tdate">&nbsp;&nbsp;&nbsp;&nbsp;
@@ -28,9 +27,8 @@
 </form>
 
 {% if  extrawork_list %}
-<h2>加班登记统计表 </h2>
+<h2 class="text-center">加班登记统计表 </h2>
 <table class="table table-striped">
-	<tboday>
 	<tr>
 		<td>日期 </td>
 		<td>上午姓名 </td>
@@ -42,7 +40,7 @@
 		<td>晚上姓名</td>
 		<td>加班内容 </td>
 		<td>金额(元) </td>
-		<td style="width:200px;">备注</td>
+		<td>备注</td>
 		<td>操作</td>
 	</tr>
 	{% for extrawork in extrawork_list %}
@@ -74,8 +72,7 @@
 		<td><input type="text" class="form-control" name="eveamount" id="textline" value="{{extrawork.eveamount}}"  autofocus> </td>
 
 		<td>	
-		<input type="text" class="form-control" name="remark" id="textline" value="{{extrawork.remark}}"  autofocus style="width:180px"> </td>
-		</td>
+		<input type="text" class="form-control" name="remark" id="textline" value="{{extrawork.remark}}"  autofocus > </td>
 		<td>
 		<button class="btn  btn-danger" type='submit' >修改</button>
 		</td>
@@ -83,14 +80,12 @@
 	</tr>
 	</form>
 	{% endfor %}
-	</tboday>
-
 </table>
 {% endif %}
 
 
 {% if duty_list %}
-<h2>今日值班登记 </h2>
+<h2 class="text-center">今日值班登记 </h2>
 <table class="table table-striped">
 	<tboday>
 	<tr>
