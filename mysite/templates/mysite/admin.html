@@ -1,7 +1,7 @@
 <html lang="zh-cn">
 {% include 'mysite/header.html' %}
 <body>
-<div class="container">
+<div class="container" {% if extrawork_list %} style="width:1302px;" {% else %}  style="width:1030px;"   {% endif %}>
 
 <div class="page-header text-center">
 <h1>值班加班信息管理系统</h1>

@@ -7,6 +7,7 @@ from django.core.context_processors import csrf
 from mysite.models import Dutyreg, Extraworkreg, Variable
 # Create your views here.
 import time
+import os
 import datetime
 import random
 import string
@@ -19,9 +20,11 @@ def str_generator(size=6,chars=string.ascii_letters+string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
 
 def init(request):
+    return HttpResponse(os.path.abspath(os.path.join(os.path.dirname(__file__))))
     try:
         Variable.objects.all().delete()
         Variable(varname="adminpass", varval="123456").save()
+	Variable(varname="defaultmoney", varval='0').save()
         return HttpResponse("Finished!")
     except:
         return HttpResponse("Error!")
@@ -215,7 +218,7 @@ def gettable(request):
                 'lstsdate' : sdate_str,
                 'lsttdate' : tdate_str,
             }
-            with open('/var/www/mysite/mysite/static/mysite/down.csv','wb') as outfile:
+            with open(os.path.abspath(os.path.join(os.path.dirname(__file__)))+'/static/mysite/down.csv','wb') as outfile:
                 writer = csv.writer(outfile)
                 writer.writerow(["日期","上午名字","加班内容","金额","下午名字","加班内容","金额","晚上名字","加班内容","金额","备注"])
                 for extrawork in rst_list:
@@ -229,7 +232,7 @@ def gettable(request):
                 'lstsdate' : sdate_str,
                 'lsttdate' : tdate_str,
             }
-            with open('/var/www/mysite/mysite/static/mysite/down.csv','wb') as outfile:
+            with open(os.path.abspath(os.path.join(os.path.dirname(__file__)))+'/static/mysite/down.csv','wb') as outfile:
                 writer = csv.writer(outfile)
                 writer.writerow(["日期","上午名字","金额","下午名字","金额","晚上名字","金额","备注"])
                 for extrawork in rst_list:
@@ -246,7 +249,7 @@ def down(request):
     from django.core.servers.basehttp import FileWrapper
     from django.conf import settings
     import mimetypes
-    filename =  "/var/www/mysite/mysite/static/mysite/down.csv"
+    filename =  os.path.abspath(os.path.join(os.path.dirname(__file__)))+"/static/mysite/down.csv"
     download_name = "down.csv"
     wrapper = FileWrapper(open(filename))
     content_type = mimetypes.guess_type(filename)[0]
