@@ -1,7 +1,7 @@
 <html lang="zh-cn">
 {% include 'mysite/header.html' %}
 <body>
-<div class="container" {% if extrawork_list %} style="width:1302px;" {% else %}  style="width:1030px;"   {% endif %}>
+<div class="container" {% if extrawork_list %} style="width:1302px;"{% elif holiduty_list %} style="width:2000px;" {% else %}  style="width:1030px;"   {% endif %}>
 
 <div class="page-header text-center">
 <h1>值班加班信息管理系统</h1>
@@ -19,11 +19,12 @@
 类型
 <select form="cxform" name="cxtype" >
  							<option value="duty" {% if selectfg == 'duty' %} selected="selected" {% endif %}>值班</option>
- 							<option value="extrawork"  {% if selectfg == 'extrawork' %} selected="selected" {% endif %}>加班</option> 						
+ 							<option value="extrawork"  {% if selectfg == 'extrawork' %} selected="selected" {% endif %}>加班</option> 
+ 							<option value="holiduty"  {% if selectfg == 'holiduty' %} selected="selected" {% endif %}>长假值班</option> 						
  						</select>
  						&nbsp;&nbsp;&nbsp;&nbsp;
 <button type="submit" class="btn btn-warning" >查询</button>
- {% if  extrawork_list or duty_list %} <a href="{% url 'dj:down' %}" class="btn btn-warning" >下载表格</a> {% endif %}
+ {% if  extrawork_list or duty_list or holiduty_list %} <a href="{% url 'dj:down' %}" class="btn btn-warning" >下载表格</a> {% endif %}
 </form>
 
 {% if  extrawork_list %}
@@ -127,6 +128,88 @@
 
 </table>
 {% endif %}
+
+
+
+{% if  holiduty_list %}
+<h2 class="text-center">长假值班登记统计表 </h2>
+<table class="table table-striped">
+	<tr>
+		<td>日期 </td>
+		<td>应急小组 </td>
+		<td>金额(元)</td>
+		<td>客服中心收费人 </td>
+		<td>金额(元)</td>
+		<td>总值班人 </td>
+		<td>金额(元)</td>
+		<td>上午电话值班人 </td>
+		<td>金额(元)</td>
+		<td>上午工程值班人 </td>
+		<td>金额(元)</td>
+		<td>下午电话值班人 </td>
+		<td>金额(元)</td>
+		<td>下午工程值班人 </td>
+		<td>金额(元)</td>		
+		<td>晚上值班人</td>
+		<td>金额(元) </td>
+		<td>备注</td>
+		<td>操作</td>
+	</tr>
+	{% for holiduty in holiduty_list %}
+	<form action="{% url 'dj:gettable' %}" method="POST" role="form">{% csrf_token %}
+	<tr>	
+		<input type='hidden' name="cxtype" value="{{selectfg}}">
+		<input type='hidden' name="sdate" value="{{lstsdate}}">
+		<input type='hidden' name='tdate' value="{{lsttdate}}">
+		<input type='hidden' name="savetype" value="holiduty">
+		<input type='hidden' name="savedate" value="{{holiduty.date|date:"Y-m-d"}}">
+		<td>{{holiduty.date|date:"Y-m-d"}} </td>
+
+		<td><input  type="text" class="form-control" name="emergencyteamname" id="textline" value="{{holiduty.emergencyteamname}}"  autofocus> </td>
+
+		<td><input  type="text" class="form-control" name="emergencyteamamount" id="textline" value="{{holiduty.emergencyteamamount}}"  autofocus> </td>
+
+		<td><input  type="text" class="form-control" name="servicecentername" id="textline" value="{{holiduty.servicecentername}}"  autofocus> </td>
+
+		<td><input  type="text" class="form-control" name="servicecenteramount" id="textline" value="{{holiduty.servicecenteramount}}"  autofocus> </td>
+
+		<td><input  type="text" class="form-control" name="generaldutyname" id="textline" value="{{holiduty.generaldutyname}}"  autofocus> </td>
+
+		<td><input  type="text" class="form-control" name="generaldutyamount" id="textline" value="{{holiduty.generaldutyamount}}"  autofocus> </td>
+
+		<td><input  type="text" class="form-control" name="amphonedutyname" id="textline" value="{{holiduty.amphonedutyname}}"  autofocus> </td>
+
+		<td><input  type="text" class="form-control" name="amphonedutyamount" id="textline" value="{{holiduty.amphonedutyamount}}"  autofocus> </td>
+
+		<td><input  type="text" class="form-control" name="amengineername" id="textline" value="{{holiduty.amengineername}}"  autofocus> </td>
+
+		<td><input  type="text" class="form-control" name="amengineeramount" id="textline" value="{{holiduty.amengineeramount}}"  autofocus> </td>
+
+		<td><input  type="text" class="form-control" name="pmphonedutyname" id="textline" value="{{holiduty.pmphonedutyname}}"  autofocus> </td>
+
+		<td><input  type="text" class="form-control" name="pmphonedutyamount" id="textline" value="{{holiduty.pmphonedutyamount}}"  autofocus> </td>
+
+		<td><input  type="text" class="form-control" name="pmengineername" id="textline" value="{{holiduty.pmengineername}}"  autofocus> </td>
+
+		<td><input  type="text" class="form-control" name="pmengineeramount" id="textline" value="{{holiduty.pmengineeramount}}"  autofocus> </td>
+
+		<td><input  type="text" class="form-control" name="evedutyname" id="textline" value="{{holiduty.evedutyname}}"  autofocus> </td>
+
+		<td><input  type="text" class="form-control" name="evedutyamount" id="textline" value="{{holiduty.evedutyamount}}"  autofocus> </td>
+		
+
+		<td>	
+		<input type="text" class="form-control" name="remark" id="textline" value="{{holiduty.remark}}"  autofocus > </td>
+		<td>
+		<button class="btn  btn-danger" type='submit' >修改</button>
+		</td>
+
+	</tr>
+	</form>
+	{% endfor %}
+</table>
+{% endif %}
+
 
 
 </div>

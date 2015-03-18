@@ -30,6 +30,27 @@ class Extraworkreg(models.Model):
     eveamount = models.IntegerField(default=0)
     remark = models.CharField(max_length=255,default=" ")
 
+class Holidutyreg(models.Model):
+    id = models.AutoField(primary_key=True)
+    date=models.DateField(default=datetime.date.today())
+    emergencyteamname = models.CharField(max_length=75)
+    emergencyteamamount = models.IntegerField(default=0)
+    servicecentername = models.CharField(max_length=75)
+    servicecenteramount = models.IntegerField(default=0)
+    generaldutyname = models.CharField(max_length=75)
+    generaldutyamount = models.IntegerField(default=0)
+    amphonedutyname = models.CharField(max_length=75)
+    amphonedutyamount = models.IntegerField(default=0)
+    amengineername = models.CharField(max_length=75)
+    amengineeramount = models.IntegerField(default=0)
+    pmphonedutyname = models.CharField(max_length=75)
+    pmphonedutyamount = models.IntegerField(default=0)
+    pmengineername = models.CharField(max_length=75)
+    pmengineeramount = models.IntegerField(default=0)
+    evedutyname = models.CharField(max_length=75)
+    evedutyamount = models.IntegerField(default=0)
+    remark = models.CharField(max_length=255)
+
 class  Variable(models.Model):
     varname = models.CharField(max_length=255) 
     varval = models.CharField(max_length=255)

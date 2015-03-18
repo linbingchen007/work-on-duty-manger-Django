@@ -1,0 +1,72 @@
+<html lang="zh-cn">
+{% load static  %}
+{% include 'mysite/header.html' %}
+<body>
+<div class="container" style="width:2000px;">
+<div class="page-header text-center" style="width:2000px;">
+<h1>长假值班登记</h1>
+</div>
+<form action="{% url "dj:handleholiduty" %}" method="POST" role="form">
+ {% csrf_token %} 
+<table class="table table-striped">
+	<tr>
+		<td>日期 </td>
+		<td>应急小组 </td>
+		<td>金额(元)</td>
+		<td>客服中心收费人 </td>
+		<td>金额(元)</td>
+		<td>总值班人 </td>
+		<td>金额(元)</td>
+		<td>上午电话值班人 </td>
+		<td>金额(元)</td>
+		<td>上午工程值班人 </td>
+		<td>金额(元)</td>
+		<td>下午电话值班人 </td>
+		<td>金额(元)</td>
+		<td>下午工程值班人 </td>
+		<td>金额(元)</td>		
+		<td>晚上值班人</td>
+		<td>金额(元) </td>
+		<td style="width:200px;">备注</td>
+	</tr>
+	<tr>
+		<td>{{holiduty.date|date:"Y-m-d"}} </td>
+		<td><input  type="text" class="form-control" name="emergencyteamname" value="{{holiduty.emergencyteamname}}"  autofocus> </td>
+		<td><input  type="text" class="form-control" name="emergencyteamamount" value="{{holiduty.emergencyteamamount}}"  autofocus> </td>
+		<td><input  type="text" class="form-control" name="servicecentername" value="{{holiduty.servicecentername}}"  autofocus> </td>
+		<td><input  type="text" class="form-control" name="servicecenteramount" value="{{holiduty.servicecenteramount}}"  autofocus> </td>
+		<td><input  type="text" class="form-control" name="generaldutyname" value="{{holiduty.generaldutyname}}"  autofocus> </td>
+		<td><input  type="text" class="form-control" name="generaldutyamount" value="{{holiduty.generaldutyamount}}"  autofocus> </td>
+		<td><input  type="text" class="form-control" name="amphonedutyname" value="{{holiduty.amphonedutyname}}"  autofocus> </td>
+		<td><input  type="text" class="form-control" name="amphonedutyamount" value="{{holiduty.amphonedutyamount}}"  autofocus> </td>
+		<td><input  type="text" class="form-control" name="amengineername" value="{{holiduty.amengineername}}"  autofocus> </td>
+		<td><input  type="text" class="form-control" name="amengineeramount" value="{{holiduty.amengineeramount}}"  autofocus> </td>
+		<td><input  type="text" class="form-control" name="pmphonedutyname" value="{{holiduty.pmphonedutyname}}"  autofocus> </td>
+		<td><input  type="text" class="form-control" name="pmphonedutyamount" value="{{holiduty.pmphonedutyamount}}"  autofocus> </td>
+		<td><input  type="text" class="form-control" name="pmengineername" value="{{holiduty.pmengineername}}"  autofocus> </td>
+		<td><input  type="text" class="form-control" name="pmengineeramount" value="{{holiduty.pmengineeramount}}"  autofocus> </td>
+		<td><input  type="text" class="form-control" name="evedutyname" value="{{holiduty.evedutyname}}"  autofocus> </td>
+		<td><input  type="text" class="form-control" name="evedutyamount" value="{{holiduty.evedutyamount}}"  autofocus> </td>
+		<td>{{holiduty.remark}}
+		{% if holiduty.remark != ' ' %}
+		<br >
+		{% endif %}
+		<input type="text" class="form-control" name="remark" autofocus style="width:170px"> 
+		</td>
+	</tr>
+</table>
+<button type="submit" class="btn btn-warning pull-right">提交</button>
+</form>
+<br>
+<br>
+<br>
+
+<ol class="breadcrumb">
+  <li><a href="{% url "index" %}">主页</a></li>
+  <li><a href="{% url "dj:extrawork" %}">加班签到</a></li>
+  <li><a href="{% url  "dj:duty" %}">值班签到</a></li>
+  <li class="active">长假值班签到</li>
+</ol>
+</div>
+</body>
+</html>
