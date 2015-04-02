@@ -14,6 +14,22 @@ import string
 import csv
 
 
+class person_income():
+
+    def __init__(self):
+        self.name = ""
+        self.amcount = 0
+        self.amuprice = 0
+        self.amsum = 0
+        self.pmcount = 0
+        self.pmuprice = 0
+        self.pmsum = 0
+        self.evecount = 0
+        self.eveuprice = 0
+        self.evesum = 0
+        self.totsum = 0
+
+
 def digits_generator(size=6, chars=string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
 
@@ -99,6 +115,7 @@ def generate_data(request):
     # except:
     #    return HttpResponse('Error!')
     """
+
 
 def makeextraworkreg(request):
     queryresults = Extraworkreg.objects.all().filter(
@@ -326,6 +343,9 @@ def gettable(request):
     tdate = datetime.date(
         int(tdate_list[0]), int(tdate_list[1]), int(tdate_list[2]))
     cxtype = request.POST['cxtype']
+    people_income = []
+    namevis = {}
+    people_cnt = 0
     if cxtype == 'extrawork':
         rst_list = Extraworkreg.objects.all().filter(
             date__gte=sdate, date__lte=tdate).order_by('date')
@@ -335,6 +355,69 @@ def gettable(request):
             'lstsdate': sdate_str,
             'lsttdate': tdate_str,
         }
+        for item in rst_list:
+            if not item.amname in namevis:
+                namevis[item.amname] = people_cnt
+                people_income.append(person_income())
+                people_income[people_cnt].name=item.amname
+                people_income[people_cnt].amuprice = item.amamount
+                people_income[people_cnt].amsum += item.amamount
+                people_income[people_cnt].amcount += 1
+                people_cnt += 1
+            else:
+                tid = namevis[item.amname]
+                people_income[tid].amuprice = item.amamount
+                people_income[tid].amsum += item.amamount
+                people_income[tid].amcount += 1
+
+            if not item.pmname in namevis:
+                namevis[item.pmname] = people_cnt
+                people_income.append(person_income())
+                people_income[people_cnt].name=item.pmname
+                people_income[people_cnt].pmuprice = item.pmamount
+                people_income[people_cnt].pmsum += item.pmamount
+                people_income[people_cnt].pmcount += 1
+                people_cnt += 1
+            else:
+                tid = namevis[item.pmname]
+                people_income[tid].pmuprice = item.pmamount
+                people_income[tid].pmsum += item.pmamount
+                people_income[tid].pmcount += 1
+
+            if not item.evename in namevis:
+                namevis[item.evename] = people_cnt
+                people_income.append(person_income())
+                people_income[people_cnt].name=item.evename
+                people_income[people_cnt].eveuprice = item.eveamount
+                people_income[people_cnt].evesum += item.eveamount
+                people_income[people_cnt].evecount += 1
+                people_cnt += 1
+            else:
+                tid = namevis[item.evename]
+                people_income[tid].eveuprice = item.eveamount
+                people_income[tid].evesum += item.eveamount
+                people_income[tid].evecount += 1
+
+        with open(os.path.abspath(os.path.join(os.path.dirname(__file__)))+'/static/mysite/income.csv','wb') as outfile:
+            writer = csv.writer(outfile)
+            writer.writerow(
+                ["姓名","早上加班数量","单价","小计","下午加班数量","单价","小计","晚上加班数量","单价","小计","总计"]
+                )
+            for item in people_income:
+                item.totsum=item.amsum+item.pmsum+item.evesum
+                writer.writerow([unicode(item.name).encode('utf8'),
+                    unicode(item.amcount).encode('utf8'),
+                    unicode(item.amuprice).encode('utf8'),
+                    unicode(item.amsum).encode('utf8'),
+                    unicode(item.pmcount).encode('utf8'),
+                    unicode(item.pmuprice).encode('utf8'),
+                    unicode(item.pmsum).encode('utf8'),
+                    unicode(item.evecount).encode('utf8'),
+                    unicode(item.eveuprice).encode('utf8'),
+                    unicode(item.evesum).encode('utf8'),
+                    unicode(item.totsum).encode('utf8'),
+                    ])
+
         with open(os.path.abspath(os.path.join(os.path.dirname(__file__))) + '/static/mysite/down.csv', 'wb') as outfile:
             writer = csv.writer(outfile)
             writer.writerow(
@@ -352,6 +435,69 @@ def gettable(request):
             'lstsdate': sdate_str,
             'lsttdate': tdate_str,
         }
+        for item in rst_list:
+            if not item.amname in namevis:
+                namevis[item.amname] = people_cnt
+                people_income.append(person_income())
+                people_income[people_cnt].name=item.amname
+                people_income[people_cnt].amuprice = item.amamount
+                people_income[people_cnt].amsum += item.amamount
+                people_income[people_cnt].amcount += 1
+                people_cnt += 1
+            else:
+                tid = namevis[item.amname]
+                people_income[tid].amuprice = item.amamount
+                people_income[tid].amsum += item.amamount
+                people_income[tid].amcount += 1
+
+            if not item.pmname in namevis:
+                namevis[item.pmname] = people_cnt
+                people_income.append(person_income())
+                people_income[people_cnt].name=item.pmname
+                people_income[people_cnt].pmuprice = item.pmamount
+                people_income[people_cnt].pmsum += item.pmamount
+                people_income[people_cnt].pmcount += 1
+                people_cnt += 1
+            else:
+                tid = namevis[item.pmname]
+                people_income[tid].pmuprice = item.pmamount
+                people_income[tid].pmsum += item.pmamount
+                people_income[tid].pmcount += 1
+
+            if not item.evename in namevis:
+                namevis[item.evename] = people_cnt
+                people_income.append(person_income())
+                people_income[people_cnt].name=item.evename
+                people_income[people_cnt].eveuprice = item.eveamount
+                people_income[people_cnt].evesum += item.eveamount
+                people_income[people_cnt].evecount += 1
+                people_cnt += 1
+            else:
+                tid = namevis[item.evename]
+                people_income[tid].eveuprice = item.eveamount
+                people_income[tid].evesum += item.eveamount
+                people_income[tid].evecount += 1
+
+        with open(os.path.abspath(os.path.join(os.path.dirname(__file__)))+'/static/mysite/income.csv','wb') as outfile:
+            writer = csv.writer(outfile)
+            writer.writerow(
+                ["姓名","早上值班数量","单价","小计","下午值班数量","单价","小计","晚上值班数量","单价","小计","总计"]
+                )
+            for item in people_income:
+                item.totsum=item.amsum+item.pmsum+item.evesum
+                writer.writerow([unicode(item.name).encode('utf8'),
+                    unicode(item.amcount).encode('utf8'),
+                    unicode(item.amuprice).encode('utf8'),
+                    unicode(item.amsum).encode('utf8'),
+                    unicode(item.pmcount).encode('utf8'),
+                    unicode(item.pmuprice).encode('utf8'),
+                    unicode(item.pmsum).encode('utf8'),
+                    unicode(item.evecount).encode('utf8'),
+                    unicode(item.eveuprice).encode('utf8'),
+                    unicode(item.evesum).encode('utf8'),
+                    unicode(item.totsum).encode('utf8'),
+                    ])
+
         with open(os.path.abspath(os.path.join(os.path.dirname(__file__))) + '/static/mysite/down.csv', 'wb') as outfile:
             writer = csv.writer(outfile)
             writer.writerow(
@@ -426,6 +572,23 @@ def down(request):
     filename = os.path.abspath(
         os.path.join(os.path.dirname(__file__))) + "/static/mysite/down.csv"
     download_name = "down.csv"
+    wrapper = FileWrapper(open(filename))
+    content_type = mimetypes.guess_type(filename)[0]
+    response = HttpResponse(wrapper, content_type=content_type)
+    response['Content-Length'] = os.path.getsize(filename)
+    response['Content-Disposition'] = "attachment; filename=%s" % download_name
+    return response
+
+def income(request):
+    import os
+    import tempfile
+    import zipfile
+    from django.core.servers.basehttp import FileWrapper
+    from django.conf import settings
+    import mimetypes
+    filename = os.path.abspath(
+        os.path.join(os.path.dirname(__file__))) + "/static/mysite/income.csv"
+    download_name = "income.csv"
     wrapper = FileWrapper(open(filename))
     content_type = mimetypes.guess_type(filename)[0]
     response = HttpResponse(wrapper, content_type=content_type)

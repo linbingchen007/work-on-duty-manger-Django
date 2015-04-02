@@ -20,11 +20,13 @@
 <select form="cxform" name="cxtype" >
  							<option value="duty" {% if selectfg == 'duty' %} selected="selected" {% endif %}>值班</option>
  							<option value="extrawork"  {% if selectfg == 'extrawork' %} selected="selected" {% endif %}>加班</option> 
- 							<option value="holiduty"  {% if selectfg == 'holiduty' %} selected="selected" {% endif %}>长假值班</option> 						
+ 							<option value="holiduty"  {% if selectfg == 'holiduty' %} selected="selected" {% endif %}>寒暑假值班</option> 						
  						</select>
  						&nbsp;&nbsp;&nbsp;&nbsp;
 <button type="submit" class="btn btn-warning" >查询</button>
  {% if  extrawork_list or duty_list or holiduty_list %} <a href="{% url 'dj:down' %}" class="btn btn-warning" >下载表格</a> {% endif %}
+
+  {% if  extrawork_list or duty_list  %} <a href="{% url 'dj:income' %}" class="btn btn-warning" >下载个人收入汇总表</a> {% endif %}
 </form>
 
 {% if  extrawork_list %}
@@ -132,7 +134,7 @@
 
 
 {% if  holiduty_list %}
-<h2 class="text-center">长假值班登记统计表 </h2>
+<h2 class="text-center">寒暑假值班登记统计表 </h2>
 <table class="table table-striped">
 	<tr>
 		<td>日期 </td>

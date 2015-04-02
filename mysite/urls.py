@@ -18,5 +18,6 @@ urlpatterns=patterns('',
 	url('^gettable$',views.gettable,name='gettable'),
 	url('^generate_data$',views.generate_data,name='generate_data'),
 	url('^down$',views.down,name='down'),
-	url('^chgpass$',views.chgpass,name='chgpass')
+	url('^chgpass$',views.chgpass,name='chgpass'),
+	url('^income$',views.income,name='income'),
 )

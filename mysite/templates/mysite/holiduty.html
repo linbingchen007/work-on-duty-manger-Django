@@ -4,7 +4,7 @@
 <body>
 <div class="container" style="width:2000px;">
 <div class="page-header text-center" style="width:2000px;">
-<h1>长假值班登记</h1>
+<h1>寒暑假值班登记</h1>
 </div>
 <form action="{% url "dj:handleholiduty" %}" method="POST" role="form">
  {% csrf_token %} 
@@ -65,7 +65,7 @@
   <li><a href="{% url "index" %}">主页</a></li>
   <li><a href="{% url "dj:extrawork" %}">加班签到</a></li>
   <li><a href="{% url  "dj:duty" %}">值班签到</a></li>
-  <li class="active">长假值班签到</li>
+  <li class="active">寒暑假值班签到</li>
 </ol>
 </div>
 </body>
