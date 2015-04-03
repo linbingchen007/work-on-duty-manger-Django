@@ -8,11 +8,11 @@ class Dutyreg(models.Model):
     id = models.AutoField(primary_key=True)
     date = models.DateField(default=datetime.date.today())
     amname = models.CharField(max_length=75,default=" ")
-    amamount = models.IntegerField(default=0)
+    amamount = models.IntegerField(default=100)
     pmname = models.CharField(max_length=75,default=" ")
-    pmamount = models.IntegerField(default=0)
+    pmamount = models.IntegerField(default=100)
     evename = models.CharField(max_length=75,default=" ")
-    eveamount = models.IntegerField(default=0)
+    eveamount = models.IntegerField(default=120)
     remark = models.CharField(max_length=255,default=" ")
 
 

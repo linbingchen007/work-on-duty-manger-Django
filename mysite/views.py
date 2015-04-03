@@ -12,6 +12,7 @@ import datetime
 import random
 import string
 import csv
+import re
 
 
 class person_income():
@@ -120,6 +121,7 @@ def generate_data(request):
 def makeextraworkreg(request):
     queryresults = Extraworkreg.objects.all().filter(
         date=datetime.date.today())
+    
     if len(queryresults) > 0:
         extrawork = queryresults[0]
     else:
@@ -356,47 +358,69 @@ def gettable(request):
             'lsttdate': tdate_str,
         }
         for item in rst_list:
-            if not item.amname in namevis:
-                namevis[item.amname] = people_cnt
-                people_income.append(person_income())
-                people_income[people_cnt].name=item.amname
-                people_income[people_cnt].amuprice = item.amamount
-                people_income[people_cnt].amsum += item.amamount
-                people_income[people_cnt].amcount += 1
-                people_cnt += 1
-            else:
-                tid = namevis[item.amname]
-                people_income[tid].amuprice = item.amamount
-                people_income[tid].amsum += item.amamount
-                people_income[tid].amcount += 1
-
-            if not item.pmname in namevis:
-                namevis[item.pmname] = people_cnt
-                people_income.append(person_income())
-                people_income[people_cnt].name=item.pmname
-                people_income[people_cnt].pmuprice = item.pmamount
-                people_income[people_cnt].pmsum += item.pmamount
-                people_income[people_cnt].pmcount += 1
-                people_cnt += 1
-            else:
-                tid = namevis[item.pmname]
-                people_income[tid].pmuprice = item.pmamount
-                people_income[tid].pmsum += item.pmamount
-                people_income[tid].pmcount += 1
-
-            if not item.evename in namevis:
-                namevis[item.evename] = people_cnt
-                people_income.append(person_income())
-                people_income[people_cnt].name=item.evename
-                people_income[people_cnt].eveuprice = item.eveamount
-                people_income[people_cnt].evesum += item.eveamount
-                people_income[people_cnt].evecount += 1
-                people_cnt += 1
-            else:
-                tid = namevis[item.evename]
-                people_income[tid].eveuprice = item.eveamount
-                people_income[tid].evesum += item.eveamount
-                people_income[tid].evecount += 1
+            #item.amname=item.amname.strip()           
+            #item.pmname=item.pmname.strip()
+            #item.evename=item.evename.strip()
+            amnames=re.split(u"、|,|，",item.amname)
+            pmnames=re.split(u"、|,|，",item.pmname)
+            evenames=re.split(u"、|,|，",item.evename)
+            amlen=len(amnames)
+            pmlen=len(pmnames)
+            evelen=len(evenames)
+            for amname in amnames:
+                amname=amname.strip()
+                if amname=="":
+                    amlen-=1
+                    continue
+                if not amname in namevis:
+                    namevis[amname] = people_cnt
+                    people_income.append(person_income())
+                    people_income[people_cnt].name=amname
+                    people_income[people_cnt].amuprice = item.amamount/(amlen<=1 and 1 or amlen)
+                    people_income[people_cnt].amsum += people_income[people_cnt].amuprice
+                    people_income[people_cnt].amcount += 1
+                    people_cnt += 1
+                else:
+                    tid = namevis[amname]
+                    people_income[tid].amuprice = item.amamount/(amlen<=1 and 1 or amlen)
+                    people_income[tid].amsum += people_income[tid].amuprice
+                    people_income[tid].amcount += 1
+            for pmname in pmnames:
+                pmname=pmname.strip()
+                if pmname=="":
+                    pmlen-=1
+                    continue
+                if not pmname in namevis:
+                    namevis[pmname] = people_cnt
+                    people_income.append(person_income())
+                    people_income[people_cnt].name=pmname
+                    people_income[people_cnt].pmuprice = item.pmamount/(pmlen<=1 and 1 or pmlen)
+                    people_income[people_cnt].pmsum += people_income[people_cnt].pmuprice
+                    people_income[people_cnt].pmcount += 1
+                    people_cnt += 1
+                else:
+                    tid = namevis[pmname]
+                    people_income[tid].pmuprice = item.pmamount/(pmlen<=1 and 1 or pmlen)
+                    people_income[tid].pmsum += people_income[tid].pmuprice
+                    people_income[tid].pmcount += 1
+            for evename in evenames:
+                evename=evename.strip()
+                if evename=="":
+                    evelen-=1
+                    continue
+                if not evename in namevis:
+                    namevis[evename] = people_cnt
+                    people_income.append(person_income())
+                    people_income[people_cnt].name=evename
+                    people_income[people_cnt].eveuprice = item.eveamount/(evelen<=1 and 1 or evelen)
+                    people_income[people_cnt].evesum += people_income[people_cnt].eveuprice
+                    people_income[people_cnt].evecount += 1
+                    people_cnt += 1
+                else:
+                    tid = namevis[evename]
+                    people_income[tid].eveuprice = item.eveamount/(evelen<=1 and 1 or evelen)
+                    people_income[tid].evesum += people_income[tid].eveuprice
+                    people_income[tid].evecount += 1
 
         with open(os.path.abspath(os.path.join(os.path.dirname(__file__)))+'/static/mysite/income.csv','wb') as outfile:
             writer = csv.writer(outfile)
@@ -436,47 +460,69 @@ def gettable(request):
             'lsttdate': tdate_str,
         }
         for item in rst_list:
-            if not item.amname in namevis:
-                namevis[item.amname] = people_cnt
-                people_income.append(person_income())
-                people_income[people_cnt].name=item.amname
-                people_income[people_cnt].amuprice = item.amamount
-                people_income[people_cnt].amsum += item.amamount
-                people_income[people_cnt].amcount += 1
-                people_cnt += 1
-            else:
-                tid = namevis[item.amname]
-                people_income[tid].amuprice = item.amamount
-                people_income[tid].amsum += item.amamount
-                people_income[tid].amcount += 1
-
-            if not item.pmname in namevis:
-                namevis[item.pmname] = people_cnt
-                people_income.append(person_income())
-                people_income[people_cnt].name=item.pmname
-                people_income[people_cnt].pmuprice = item.pmamount
-                people_income[people_cnt].pmsum += item.pmamount
-                people_income[people_cnt].pmcount += 1
-                people_cnt += 1
-            else:
-                tid = namevis[item.pmname]
-                people_income[tid].pmuprice = item.pmamount
-                people_income[tid].pmsum += item.pmamount
-                people_income[tid].pmcount += 1
-
-            if not item.evename in namevis:
-                namevis[item.evename] = people_cnt
-                people_income.append(person_income())
-                people_income[people_cnt].name=item.evename
-                people_income[people_cnt].eveuprice = item.eveamount
-                people_income[people_cnt].evesum += item.eveamount
-                people_income[people_cnt].evecount += 1
-                people_cnt += 1
-            else:
-                tid = namevis[item.evename]
-                people_income[tid].eveuprice = item.eveamount
-                people_income[tid].evesum += item.eveamount
-                people_income[tid].evecount += 1
+            #item.amname=item.amname.strip()
+            #item.pmname=item.pmname.strip()
+            #item.evename=item.evename.strip()
+            amnames=re.split(u"、|,|，",item.amname)
+            pmnames=re.split(u"、|,|，",item.pmname)
+            evenames=re.split(u"、|,|，",item.evename)
+            amlen=len(amnames)
+            pmlen=len(pmnames)
+            evelen=len(evenames)
+            for amname in amnames:
+                amname=amname.strip()
+                if amname=="":
+                    amlen-=1
+                    continue
+                if not amname in namevis:
+                    namevis[amname] = people_cnt
+                    people_income.append(person_income())
+                    people_income[people_cnt].name=amname
+                    people_income[people_cnt].amuprice = item.amamount/(amlen<=1 and 1 or amlen)
+                    people_income[people_cnt].amsum += people_income[people_cnt].amuprice
+                    people_income[people_cnt].amcount += 1
+                    people_cnt += 1
+                else:
+                    tid = namevis[amname]
+                    people_income[tid].amuprice = item.amamount/(amlen<=1 and 1 or amlen)
+                    people_income[tid].amsum += people_income[tid].amuprice
+                    people_income[tid].amcount += 1
+            for pmname in pmnames:
+                pmname=pmname.strip()
+                if pmname=="":
+                    pmlen-=1
+                    continue
+                if not pmname in namevis:
+                    namevis[pmname] = people_cnt
+                    people_income.append(person_income())
+                    people_income[people_cnt].name=pmname
+                    people_income[people_cnt].pmuprice = item.pmamount/(pmlen<=1 and 1 or pmlen)
+                    people_income[people_cnt].pmsum += people_income[people_cnt].pmuprice
+                    people_income[people_cnt].pmcount += 1
+                    people_cnt += 1
+                else:
+                    tid = namevis[pmname]
+                    people_income[tid].pmuprice = item.pmamount/(pmlen<=1 and 1 or pmlen)
+                    people_income[tid].pmsum += people_income[tid].pmuprice
+                    people_income[tid].pmcount += 1
+            for evename in evenames:
+                evename=evename.strip()
+                if evename=="":
+                    evelen-=1
+                    continue
+                if not evename in namevis:
+                    namevis[evename] = people_cnt
+                    people_income.append(person_income())
+                    people_income[people_cnt].name=evename
+                    people_income[people_cnt].eveuprice = item.eveamount/(evelen<=1 and 1 or evelen)
+                    people_income[people_cnt].evesum += people_income[people_cnt].eveuprice
+                    people_income[people_cnt].evecount += 1
+                    people_cnt += 1
+                else:
+                    tid = namevis[evename]
+                    people_income[tid].eveuprice = item.eveamount/(evelen<=1 and 1 or evelen)
+                    people_income[tid].evesum += people_income[tid].eveuprice
+                    people_income[tid].evecount += 1
 
         with open(os.path.abspath(os.path.join(os.path.dirname(__file__)))+'/static/mysite/income.csv','wb') as outfile:
             writer = csv.writer(outfile)
