@@ -5,6 +5,9 @@ from django.shortcuts import render, render_to_response
 from django.forms import ModelForm
 from django.core.context_processors import csrf
 from mysite.models import Dutyreg, Extraworkreg, Holidutyreg, Variable
+
+from django.utils import timezone
+
 # Create your views here.
 import time
 import os
@@ -42,6 +45,9 @@ def str_generator(size=6, chars=string.ascii_letters + string.digits):
 def init(request):
     #return HttpResponse(os.path.abspath(os.path.join(os.path.dirname(__file__))))
     try:
+        Dutyreg.objects.all().delete()
+        Extraworkreg.objects.all().delete()
+        Holidutyreg.objects.all().delete()
         Variable.objects.all().delete()
         Variable(varname="adminpass", varval="123456").save()
         Variable(varname="defaultmoney", varval='100').save()
@@ -123,13 +129,12 @@ def makedutyreg(request):
 def makeextraworkreg(request):
     queryresults = Extraworkreg.objects.all().filter(
         date=datetime.date.today())
-    
     if len(queryresults) > 0:
         extrawork = queryresults[0]
         for i in range(1,len(queryresults)):
             queryresults[i].delete()
     else:
-        return HttpResponse("部分组件未运行，请联系管理员。")
+        return HttpResponse(str(datetime.datetime.now()))
     c = {'extrawork': extrawork,
          }
     return render_to_response(
