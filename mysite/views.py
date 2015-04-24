@@ -40,11 +40,11 @@ def str_generator(size=6, chars=string.ascii_letters + string.digits):
 
 
 def init(request):
-    return HttpResponse(os.path.abspath(os.path.join(os.path.dirname(__file__))))
+    #return HttpResponse(os.path.abspath(os.path.join(os.path.dirname(__file__))))
     try:
         Variable.objects.all().delete()
         Variable(varname="adminpass", varval="123456").save()
-        Variable(varname="defaultmoney", varval='0').save()
+        Variable(varname="defaultmoney", varval='100').save()
         return HttpResponse("Finished!")
     except:
         return HttpResponse("Error!")
@@ -64,28 +64,13 @@ def chgpass(request):
         return render_to_response('mysite/chgpass.html', context_instance=RequestContext(request))
 
 
-def makedutyreg(request):
-    queryresults = Dutyreg.objects.all().filter(date=datetime.date.today())
-    if len(queryresults) > 0:
-        duty = queryresults[0]
-    else:
-        duty = Dutyreg()
-        duty.save()
-    c = {'duty': duty,
-         }
-    return render_to_response(
-        'mysite/duty.html', c, context_instance=RequestContext(request))
-
-
 def generate_data(request):
-    pass
-    """
-    # try:
-    Dutyreg.objects.all().delete()
-    Extraworkreg.objects.all().delete()
+
+    #Dutyreg.objects.all().delete()
+    #Extraworkreg.objects.all().delete()
     curdate = datetime.date(2014, 1, 1)
     delta = datetime.timedelta(days=1)
-    while curdate <= datetime.date(2015, 3, 12):
+    while curdate <= datetime.date(2015, 5, 12):
         duty = Dutyreg(date=curdate, amname=str_generator(), amamount=digits_generator(), pmname=str_generator(
         ), pmamount=digits_generator(), evename=str_generator(), eveamount=digits_generator(), remark=str_generator(size=50))
         duty.save()
@@ -115,7 +100,24 @@ def generate_data(request):
     return HttpResponse('Finished!')
     # except:
     #    return HttpResponse('Error!')
-    """
+
+
+def makedutyreg(request):
+    queryresults = Dutyreg.objects.all().filter(date=datetime.date.today())
+    if len(queryresults) > 0:
+        duty = queryresults[0]
+        for i in range(1,len(queryresults)):
+            queryresults[i].delete()
+    else:
+        return HttpResponse("部分组件未运行，请联系管理员。")
+    c = {'duty': duty,
+         }
+    return render_to_response(
+        'mysite/duty.html', c, context_instance=RequestContext(request))
+
+
+
+
 
 
 def makeextraworkreg(request):
@@ -124,9 +126,10 @@ def makeextraworkreg(request):
     
     if len(queryresults) > 0:
         extrawork = queryresults[0]
+        for i in range(1,len(queryresults)):
+            queryresults[i].delete()
     else:
-        extrawork = Extraworkreg()
-        extrawork.save()
+        return HttpResponse("部分组件未运行，请联系管理员。")
     c = {'extrawork': extrawork,
          }
     return render_to_response(
@@ -138,9 +141,10 @@ def makeholidutyreg(request):
         date=datetime.date.today())
     if len(queryresults) > 0:
         holiduty = queryresults[0]
+        for i in range(1,len(queryresults)):
+            queryresults[i].delete()
     else:
-        holiduty = Holidutyreg()
-        holiduty.save()
+        return HttpResponse("部分组件未运行，请联系管理员。")
     c = {'holiduty': holiduty,
          }
     return render_to_response('mysite/holiduty.html', c, context_instance=RequestContext(request))
@@ -187,9 +191,11 @@ def handleduty(request):
                 else:
                     cur_duty.remark += ' | ' + (request.POST['remark'])
             cur_duty.save()
-        except:
+        except:            
             return response_wrong(request, 'dj:duty')
     else:
+        for i in range(1,len(queryresults)):
+                queryresults[i].delete()
         return response_wrong(request, 'dj:duty')
     return response_success(request, 'dj:duty')
 
@@ -224,9 +230,11 @@ def handleholiduty(request):
                 else:
                     cur_holiduty.remark += ' | ' + (request.POST['remark'])
             cur_holiduty.save()
-        except:
+        except:            
             return response_wrong(request, 'dj:holiduty')
     else:
+        for i in range(1,len(queryresults)):
+                queryresults[i].delete()
         return response_wrong(request, 'dj:holiduty')
     return response_success(request, 'dj:holiduty')
 
@@ -256,6 +264,8 @@ def handleextrawork(request):
         except:
             return response_wrong(request, 'dj:extrawork')
     else:
+        for i in range(1,len(queryresults)):
+                queryresults[i].delete()
         return response_wrong(request, 'dj:extrawork')
     return response_success(request, 'dj:extrawork')
 
