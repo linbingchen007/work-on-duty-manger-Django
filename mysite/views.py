@@ -109,6 +109,7 @@ def generate_data(request):
 
 
 def makedutyreg(request):
+    #return HttpResponse(str(datetime.datetime.now()))
     queryresults = Dutyreg.objects.all().filter(date=datetime.date.today())
     if len(queryresults) > 0:
         duty = queryresults[0]
@@ -134,7 +135,7 @@ def makeextraworkreg(request):
         for i in range(1,len(queryresults)):
             queryresults[i].delete()
     else:
-        return HttpResponse(str(datetime.datetime.now()))
+        return HttpResponse("部分组件未运行，请联系管理员。")
     c = {'extrawork': extrawork,
          }
     return render_to_response(
