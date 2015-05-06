@@ -34,6 +34,7 @@ class person_income():
         self.totsum = 0
 
 
+
 def digits_generator(size=6, chars=string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
 
@@ -41,7 +42,7 @@ def digits_generator(size=6, chars=string.digits):
 def str_generator(size=6, chars=string.ascii_letters + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
 
-
+#初始化
 def init(request):
     #return HttpResponse(os.path.abspath(os.path.join(os.path.dirname(__file__))))
     try:
@@ -55,7 +56,7 @@ def init(request):
     except:
         return HttpResponse("Error!")
 
-
+#改密码
 def chgpass(request):
     newpass = request.POST.get('password', None)
     if newpass:
@@ -69,7 +70,7 @@ def chgpass(request):
     else:
         return render_to_response('mysite/chgpass.html', context_instance=RequestContext(request))
 
-
+#随机数据生成模块
 def generate_data(request):
 
     #Dutyreg.objects.all().delete()
@@ -108,6 +109,7 @@ def generate_data(request):
     #    return HttpResponse('Error!')
 
 
+#值班登记
 def makedutyreg(request):
     #return HttpResponse(str(datetime.datetime.now()))
     queryresults = Dutyreg.objects.all().filter(date=datetime.date.today())
@@ -126,7 +128,7 @@ def makedutyreg(request):
 
 
 
-
+#加班登记
 def makeextraworkreg(request):
     queryresults = Extraworkreg.objects.all().filter(
         date=datetime.date.today())
@@ -141,7 +143,7 @@ def makeextraworkreg(request):
     return render_to_response(
         'mysite/extrawork.html', c, context_instance=RequestContext(request))
 
-
+#长假值班登记
 def makeholidutyreg(request):
     queryresults = Holidutyreg.objects.all().filter(
         date=datetime.date.today())
@@ -155,7 +157,7 @@ def makeholidutyreg(request):
          }
     return render_to_response('mysite/holiduty.html', c, context_instance=RequestContext(request))
 
-
+#反馈成功信息
 def response_success(request, retlink):
     msgtext = "提交成功!"
     c = {"msgtext": msgtext,
@@ -163,7 +165,7 @@ def response_success(request, retlink):
          }
     return render_to_response('mysite/msgbox.html', c, context_instance=RequestContext(request))
 
-
+#反馈错误信息
 def response_wrong(request, retlink):
     msgtext = "未知错误，请按格式填写。"
     c = {"msgtext": msgtext,
@@ -171,14 +173,14 @@ def response_wrong(request, retlink):
          }
     return render_to_response('mysite/msgbox.html', c, context_instance=RequestContext(request))
 
-
+#反馈特定信息
 def response_spcinf(request, msgtext, retlink):
     c = {"msgtext": msgtext,
          "retlink": retlink,
          }
     return render_to_response('mysite/msgbox.html', c, context_instance=RequestContext(request))
 
-
+#更新值班信息
 def handleduty(request):
     queryresults = Dutyreg.objects.all().filter(date=datetime.date.today())
     msgtext = ""
@@ -205,7 +207,7 @@ def handleduty(request):
         return response_wrong(request, 'dj:duty')
     return response_success(request, 'dj:duty')
 
-
+#更新长假值班信息
 def handleholiduty(request):
     queryresults = Holidutyreg.objects.all().filter(date=datetime.date.today())
     msgtext = ""
@@ -244,7 +246,7 @@ def handleholiduty(request):
         return response_wrong(request, 'dj:holiduty')
     return response_success(request, 'dj:holiduty')
 
-
+#更新加班信息
 def handleextrawork(request):
     queryresults = Extraworkreg.objects.all().filter(
         date=datetime.date.today())
@@ -275,19 +277,20 @@ def handleextrawork(request):
         return response_wrong(request, 'dj:extrawork')
     return response_success(request, 'dj:extrawork')
 
-
+#主页
 def index(request):
     return render_to_response('mysite/index.html', context_instance=RequestContext(request))
     # return render_to_response('mysite/duty.html',
     # context_instance=RequestContext(request))
 
-
+#管理员登陆
 def login(request):
     return render_to_response('mysite/login.html', context_instance=RequestContext(request))
 
-
+#获取表格
 def gettable(request):
     # try:
+    #对某行数据进行更改
     savetype = request.POST.get('savetype', None)
     savedate = request.POST.get('savedate', None)
     if savedate:
@@ -623,7 +626,7 @@ def gettable(request):
     # except:
     #    return response_spcinf(request, "Error!", 'dj:admin')
 
-
+#下载表格
 def down(request):
     import os
     import tempfile
@@ -640,7 +643,7 @@ def down(request):
     response['Content-Length'] = os.path.getsize(filename)
     response['Content-Disposition'] = "attachment; filename=%s" % download_name
     return response
-
+#下载收入统计
 def income(request):
     import os
     import tempfile
@@ -658,7 +661,7 @@ def income(request):
     response['Content-Disposition'] = "attachment; filename=%s" % download_name
     return response
 
-
+#登陆处理
 def handlelogin(request):
     try:
         if request.POST['password'] == Variable.objects.all().filter(varname='adminpass')[0].varval:
